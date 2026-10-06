@@ -6,6 +6,14 @@ You list the companies you care about. The first run remembers every role alread
 
 This repo is the blank version. It does not watch any real company until you add one.
 
+A new role:
+
+<img src="docs/notification-new-role.png" alt="macOS notification: Nebius, Data Analyst (Agentic Search), Product, Amsterdam and London, with the job link" width="460">
+
+The first time a company is added, the only notice is that it is now being watched. Roles already open stay quiet:
+
+<img src="docs/notification-watching.png" alt="macOS notification: Watching GitLab. 210 open roles. I'll ping you when a new one is posted." width="460">
+
 A wide search is built to show you many roles. That is useful when you want the net. It gets noisy when you already know the employers, the city, and whether you want remote or hybrid. This watches that short list. `keywords` and `locations` keep the ping to roles you would actually open.
 
 When a role appears, paste the link into [career-ops](https://github.com/career-ops-hq/career-ops). That is the step that scores the fit and drafts the resume. You still press submit. This project does not do that job, and it does not try to.
@@ -80,7 +88,7 @@ python3 watch.py --uninstall
 
 `--install` runs a check every 5 minutes.
 
-You do not need Script Editor open. The notification is sent with AppleScript, and macOS files it under Script Editor. If nothing appears, allow notifications for Script Editor in System Settings.
+You do not need Script Editor open. The notification is sent with AppleScript, and macOS files it under Script Editor. If nothing appears, allow notifications for Script Editor in System Settings. The two banners at the top of this page are what a new role looks like, and what the first run looks like.
 
 The check runs only while the Mac is awake. Closing the lid usually puts it to sleep, so nothing runs and no banner can appear. When you open the lid, the missed check runs and notifications for roles posted while you were away show up then. A full shutdown is the same: the check runs the next time you log in.
 
