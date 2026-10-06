@@ -38,7 +38,7 @@ cp companies.example.json companies.json
 ]
 ```
 
-`keywords` and `locations` are optional filters. Leave them empty to hear about every new role. A role that does not match is still remembered, so changing the filter later does not replay the whole board.
+`keywords` and `locations` are optional filters. Leave them empty to hear about every new role. A role that does not match is still remembered, so changing the filter later does not replay the whole board. A role the board marks as remote matches a `remote` location even when the city is somewhere else.
 
 Then check once:
 
@@ -88,7 +88,7 @@ python3 watch.py --uninstall
 
 `--install` runs a check every 5 minutes.
 
-You do not need Script Editor open. The notification is sent with AppleScript, and macOS files it under Script Editor. If nothing appears, allow notifications for Script Editor in System Settings. The two banners at the top of this page are what a new role looks like, and what the first run looks like.
+Click a role banner to open the job. The notifier is the small app in `macos/notifier.app`, and macOS files those banners under Vacancy tracker. The first time it runs, allow notifications for Vacancy tracker in System Settings. The pictures at the top of this page are a new role and the quiet first run. If that app is missing, the banner still appears, filed under Script Editor, and the link is in the text.
 
 The check runs only while the Mac is awake. Closing the lid usually puts it to sleep, so nothing runs and no banner can appear. When you open the lid, the missed check runs and notifications for roles posted while you were away show up then. A full shutdown is the same: the check runs the next time you log in.
 

@@ -199,6 +199,12 @@ def greenhouse_category(raw: dict) -> str:
     return ", ".join(found)
 
 
+def job_is_remote(raw: dict) -> bool:
+    if raw.get("isRemote") is True:
+        return True
+    return str(raw.get("workplaceType") or "").strip().lower() == "remote"
+
+
 def fetch_greenhouse(board: str) -> list[dict]:
     token = urllib.parse.quote(board, safe="")
     payload = http_json(f"https://boards-api.greenhouse.io/v1/boards/{token}/jobs")
@@ -215,6 +221,7 @@ def fetch_greenhouse(board: str) -> list[dict]:
                 "id": job_id,
                 "title": as_text(raw.get("title")) or "(untitled)",
                 "location": as_text((raw.get("location") or {}).get("name")),
+                "remote": job_is_remote(raw),
                 "category": greenhouse_category(raw),
                 "url": as_text(raw.get("absolute_url"))
                 or f"https://job-boards.greenhouse.io/{token}/jobs/{job_id}",
@@ -240,6 +247,7 @@ def fetch_lever(board: str) -> list[dict]:
                 "id": job_id,
                 "title": as_text(raw.get("text")) or "(untitled)",
                 "location": as_text(categories.get("location")),
+                "remote": job_is_remote(raw),
                 "category": as_text(categories.get("team")),
                 "url": as_text(raw.get("hostedUrl")) or as_text(raw.get("applyUrl")),
                 "first_published": to_iso(raw.get("createdAt")),
@@ -269,6 +277,7 @@ def fetch_ashby(board: str) -> list[dict]:
                 "id": job_id,
                 "title": as_text(raw.get("title")) or "(untitled)",
                 "location": as_text(locations),
+                "remote": job_is_remote(raw),
                 "category": as_text(raw.get("department")) or as_text(raw.get("team")),
                 "url": as_text(raw.get("applyUrl")) or as_text(raw.get("jobUrl")),
                 "first_published": to_iso(raw.get("publishedAt")),
@@ -305,8 +314,12 @@ def matches(job: dict, company: dict) -> bool:
         haystack = " ".join([job["title"], job.get("category") or "", job.get("location") or ""]).lower()
         if not any(word in haystack for word in keywords):
             return False
-    if locations and not any(word in (job.get("location") or "").lower() for word in locations):
-        return False
+    if locations:
+        place = job.get("location") or ""
+        if job.get("remote") and "remote" not in place.lower():
+            place = f"{place} remote"
+        if not any(word in place.lower() for word in locations):
+            return False
     return True
 
 
@@ -329,7 +342,20 @@ def describe(job: dict) -> str:
     return f"{job['title']}{tail}{when}{url}"
 
 
-def notify(title: str, body: str) -> None:
+NOTIFIER = ROOT / "macos" / "notifier.app" / "Contents" / "MacOS" / "notifier"
+
+
+def notify(title: str, body: str, url: str = "") -> None:
+    if NOTIFIER.exists():
+        completed = subprocess.run(
+            [str(NOTIFIER), "notify", title, body, url],
+            check=False,
+            timeout=60,
+        )
+        if completed.returncode == 0:
+            return
+        if completed.returncode == 2:
+            print("Allow notifications for Vacancy tracker in System Settings.", file=sys.stderr)
     if not Path("/usr/bin/osascript").exists():
         print(f"{title}\n{body}\n")
         return
@@ -359,7 +385,7 @@ def announce(company: dict, jobs: list[dict]) -> None:
         )
         return
     for job in jobs:
-        notify(f"{company['name']}: {job['title']}", detail(job))
+        notify(f"{company['name']}: {job['title']}", detail(job), job.get("url") or "")
 
 
 def github_api(method: str, path: str, payload: dict | None = None):
@@ -623,6 +649,14 @@ def self_check() -> int:
     found = [job for job in current if job["id"] not in previous]
     assert [job["id"] for job in found] == ["2"]
     company = {"keywords": ["writer"], "locations": ["amsterdam"]}
+    assert matches(
+        {"title": "Product Marketing Manager", "category": "", "location": "United States", "remote": True},
+        {"keywords": ["product marketing"], "locations": ["remote", "canada"]},
+    )
+    assert not matches(
+        {"title": "Product Marketing Manager", "category": "", "location": "United States", "remote": False},
+        {"keywords": ["product marketing"], "locations": ["remote", "canada"]},
+    )
     assert matches({"title": "Writer", "category": "Academy", "location": "Amsterdam"}, company)
     assert not matches({"title": "Writer", "category": "Academy", "location": "Amsterdam"}, {"keywords": ["finance"], "locations": []})
     assert is_placeholder({"board": "REPLACE_ME"})
