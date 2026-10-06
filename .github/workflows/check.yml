@@ -1,0 +1,52 @@
+name: Check for new vacancies
+
+on:
+  schedule:
+    # Every 15 minutes. GitHub sometimes starts scheduled runs later than this.
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: vacancy-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check boards and open issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if [ ! -f companies.json ]; then
+            echo "No companies.json yet. Add one to start watching."
+            exit 0
+          fi
+          python3 watch.py --github
+
+      - name: Save the roles already seen
+        run: |
+          if [ ! -f state/seen.json ]; then
+            echo "Nothing to remember yet."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f state/seen.json
+          if git diff --cached --quiet; then
+            echo "No change."
+            exit 0
+          fi
+          git commit -m "Remember roles already seen"
+          git push
