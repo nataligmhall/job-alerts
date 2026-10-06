@@ -138,4 +138,4 @@ No. The first time a company is seen, every current role is remembered and no al
 
 ### I already use career-ops. Why this too?
 
-career-ops starts when you paste a job. This starts when a company you listed posts something new. Use the notification to find the vacancy, then paste that link into career-ops for the resume. A broad scan is a different tool: it is built to surface a lot of roles, including ones outside the companies and places you already chose.
+career-ops starts when you prompt it or when you paste a job. This starts when a company you listed posts something new, so you're notified first and open career-ops to finish the job. Use the notification to get alerts about the vacancy, then paste that link into career-ops for the resume. A broad scan is a different tool: it is built to surface a lot of roles, including ones outside the companies and places you already chose.
