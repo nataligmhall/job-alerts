@@ -1,6 +1,8 @@
 # job-alerts
 
-<img src="docs/banner.png" alt="job-alerts" width="720">
+<p align="center">
+  <img src="docs/banner.png" alt="job-alerts" width="100%">
+</p>
 
 job-alerts watches public Greenhouse, Lever, and Ashby boards and sends a macOS notification or opens a GitHub issue when a new role appears.
 
