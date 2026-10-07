@@ -342,7 +342,7 @@ def describe(job: dict) -> str:
     return f"{job['title']}{tail}{when}{url}"
 
 
-NOTIFIER = ROOT / "macos" / "notifier.app" / "Contents" / "MacOS" / "notifier"
+NOTIFIER = ROOT / "macos" / "job-alerts.app" / "Contents" / "MacOS" / "notifier"
 
 
 def notify(title: str, body: str, url: str = "") -> None:

@@ -8,6 +8,15 @@
 		<data>
 		R1h59k0fAqJd5olHxkcTStD3gcg=
 		</data>
+		<key>Resources/en.lproj/InfoPlist.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sPlFRmOqi1M8DG93wfwW9yegoZI=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 		<key>Resources/job-alerts.icns</key>
 		<data>
 		VTWpPNc/mhrNzd/7hgHBDlYfhxE=
@@ -21,6 +30,15 @@
 			<data>
 			VKlDc00EUk0w1zCQSY5jXT3DxYEBvS6qvls/rbsVeRg=
 			</data>
+		</dict>
+		<key>Resources/en.lproj/InfoPlist.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ysq/tQOyVGxhpu4UAMsAdVAenCH0Hjz40ePavPPlw14=
+			</data>
+			<key>optional</key>
+			<true/>
 		</dict>
 		<key>Resources/job-alerts.icns</key>
 		<dict>
