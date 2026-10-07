@@ -1,4 +1,6 @@
-# Vacancy tracker
+# job-alerts
+
+<img src="docs/banner.png" alt="job-alerts" width="720">
 
 job-alerts watches public Greenhouse, Lever, and Ashby boards and sends a macOS notification or opens a GitHub issue when a new role appears.
 
@@ -88,7 +90,7 @@ python3 watch.py --uninstall
 
 `--install` runs a check every 5 minutes.
 
-Click a role banner to open the job. The notifier is the small app in `macos/notifier.app`, and macOS files those banners under Vacancy tracker. The first time it runs, allow notifications for Vacancy tracker in System Settings. The pictures at the top of this page are a new role and the quiet first run. If that app is missing, the banner still appears, filed under Script Editor, and the link is in the text.
+Click a role banner to open the job. The notifier is the small app in `macos/notifier.app`, and macOS files those banners under job-alerts. The first time it runs, allow notifications for job-alerts in System Settings. The pictures at the top of this page are a new role and the quiet first run. If that app is missing, the banner still appears, filed under Script Editor, and the link is in the text.
 
 The check runs only while the Mac is awake. Closing the lid usually puts it to sleep, so nothing runs and no banner can appear. When you open the lid, the missed check runs and notifications for roles posted while you were away show up then. A full shutdown is the same: the check runs the next time you log in.
 

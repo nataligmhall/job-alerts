@@ -3,9 +3,33 @@
 <plist version="1.0">
 <dict>
 	<key>files</key>
-	<dict/>
+	<dict>
+		<key>Resources/Assets.car</key>
+		<data>
+		R1h59k0fAqJd5olHxkcTStD3gcg=
+		</data>
+		<key>Resources/job-alerts.icns</key>
+		<data>
+		VTWpPNc/mhrNzd/7hgHBDlYfhxE=
+		</data>
+	</dict>
 	<key>files2</key>
-	<dict/>
+	<dict>
+		<key>Resources/Assets.car</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VKlDc00EUk0w1zCQSY5jXT3DxYEBvS6qvls/rbsVeRg=
+			</data>
+		</dict>
+		<key>Resources/job-alerts.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CclDUJ914MqzHmxJUkMG3AYIJa6l9nBZntPqM7i3jlQ=
+			</data>
+		</dict>
+	</dict>
 	<key>rules</key>
 	<dict>
 		<key>^Resources/</key>

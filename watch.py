@@ -355,7 +355,7 @@ def notify(title: str, body: str, url: str = "") -> None:
         if completed.returncode == 0:
             return
         if completed.returncode == 2:
-            print("Allow notifications for Vacancy tracker in System Settings.", file=sys.stderr)
+            print("Allow notifications for job-alerts in System Settings.", file=sys.stderr)
     if not Path("/usr/bin/osascript").exists():
         print(f"{title}\n{body}\n")
         return
